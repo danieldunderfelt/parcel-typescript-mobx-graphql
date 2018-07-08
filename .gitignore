@@ -1,0 +1,9 @@
+.idea
+dist
+.cache
+graphql.config.json
+node_modules
+*.log
+.DS_Store
+Thumbs.db
+.Trashes
