@@ -4,20 +4,10 @@ import { HttpLink } from 'apollo-link-http'
 import { onError } from 'apollo-link-error'
 import { withClientState } from 'apollo-link-state'
 import { ApolloLink, Observable } from 'apollo-link'
-import { get } from 'lodash'
 
-const clientCache = new InMemoryCache({
-  dataIdFromObject: object => {
-    const typename = get(object, '__typename', '')
+const GRAPHQL_URL = 'http://localhost:4000'
 
-    switch (typename) {
-      case 'Location':
-        return `${typename}:${JSON.stringify(object)}`
-      default:
-        return `${typename}:${get(object, 'id', null)}`
-    }
-  },
-})
+const clientCache = new InMemoryCache()
 
 const request = async operation => {
   operation.setContext({
@@ -78,7 +68,7 @@ const client = new ApolloClient({
       cache: clientCache,
     }),
     new HttpLink({
-      uri: 'http://localhost:4000',
+      uri: GRAPHQL_URL,
     }),
   ]),
   cache: clientCache,
